@@ -1,13 +1,60 @@
-interface Params {
-  isValid: boolean;
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Request, Response, NextFunction } from 'express';
+import * as jwt from 'jsonwebtoken';
+import pm from 'picomatch';
+
+export interface Configs {
+  jwtSecret: string;
+  whitelist?: string[];
+  missingTokenErrorStatus?: number;
+  missingTokenErrorMessage?: string;
+  verifyTokenErrorStatus?: number;
+  verifyTokenErrorMessage?: string;
+  cookieName?: string;
+}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type DecodedToken = { [key: string]: any };
+export interface UserDataRequest extends Request {
+  user: DecodedToken;
 }
 
-export default function func({ isValid }: Params) {
-  let foo = 1;
-
-  if (isValid) {
-    foo = 2;
+const gateGuard = (
+  {
+    jwtSecret,
+    whitelist = [],
+    missingTokenErrorStatus = 401,
+    missingTokenErrorMessage = 'Missing token.',
+    verifyTokenErrorStatus = 403,
+    verifyTokenErrorMessage = 'Invalid jwt.',
+    cookieName = 'token',
+  }: Configs,
+) => (
+  req: UserDataRequest,
+  res: Response,
+  next: NextFunction,
+) => {
+  let isMatch = false;
+  for (let i = 0; i < whitelist.length; i++) {
+    if (pm(whitelist[i])(req.path)) isMatch = true;
   }
-
-  return foo;
-}
+  if (isMatch) {
+    next();
+  } else {
+    const token = req.cookies[cookieName];
+    if (!token) {
+      return res
+        .status(missingTokenErrorStatus)
+        .send(missingTokenErrorMessage);
+    }
+    jwt.verify(token, jwtSecret, (err: jwt.JsonWebTokenError, data: DecodedToken) => {
+      if (err) {
+        return res
+          .status(verifyTokenErrorStatus)
+          .send(verifyTokenErrorMessage);
+      }
+      req.user = data;
+      next();
+    });
+  }
+};
+export default gateGuard;

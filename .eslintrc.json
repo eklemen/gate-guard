@@ -3,17 +3,16 @@
   "plugins": ["typescript", "import"],
   "extends": [
     "airbnb",
-    "prettier",
     "typescript",
-    "typescript/prettier",
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:import/typescript"
   ],
   "rules": {
-    "prettier/prettier": "error",
+    "consistent-return": 0,
     "import/no-unresolved": "error",
     "import/extensions": "off",
+    "no-plusplus": [2, { "allowForLoopAfterthoughts": true }],
     "require-jsdoc": "off",
     "@typescript-eslint/explicit-function-return-type": "off"
   }
