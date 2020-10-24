@@ -32,6 +32,7 @@ app.use(gateGuard({ jwtSecret: 'shh' }))
 | `missingTokenErrorStatus`  | `401`  | Optional  | HTTP status returned when the key for the jwt is missing from `cookies`.  |
 |  `missingTokenErrorMessage` | 'Missing token.'  | Optional  | Message to show when there is no cookie containing the JWT present at all.  |
 |  `verifyTokenErrorStatus` |  `403` |  Optional |  HTTP status returned when the provided JWT failed to verify. |
+|  `verifyTokenErrorMessage` |  'Invalid jwt.' |  Optional |  HTTP Message returned when the provided JWT failed to verify. |
 | `cookieName`  | `'token'`  |  Optional | The key where the JWT can be found within the `req.cookies` object. |
 
 ## Examples
