@@ -1,6 +1,16 @@
 {
   "name": "gate-guard",
-  "version": "2.0.1",
+  "description": "A configurable lightweight ExpressJs middleware for jsonwebtoken to validate tokens sent as cookies instead of headers.",
+  "author": "Evan Klemen <ejklemen+gateguard@gmail.com>",
+  "keywords": [
+    "express",
+    "jwt",
+    "jsonwebtoken",
+    "middleware",
+    "authentication"
+  ],
+  "repository": "eklemen/gate-guard",
+  "version": "2.0.2",
   "scripts": {
     "test": "jest --detectOpenHandles",
     "test:watch": "jest --detectOpenHandles --watch",
