@@ -34,6 +34,7 @@ app.use(gateGuard({ jwtSecret: 'shh' }))
 |  `verifyTokenErrorStatus` |  `403` |  Optional |  HTTP status returned when the provided JWT failed to verify. |
 |  `verifyTokenErrorMessage` |  'Invalid jwt.' |  Optional |  HTTP Message returned when the provided JWT failed to verify. |
 | `cookieName`  | `'token'`  |  Optional | The key where the JWT can be found within the `req.cookies` object. |
+| `jwtVerifyOptions`  | `{}`  |  Optional | Pass-through for native configs of the [jwt.verify method](https://www.npmjs.com/package/jsonwebtoken#jwtverifytoken-secretorpublickey-options-callback) |
 
 ## Examples
 
