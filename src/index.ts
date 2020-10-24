@@ -11,9 +11,12 @@ export interface Configs {
   verifyTokenErrorStatus?: number;
   verifyTokenErrorMessage?: string;
   cookieName?: string;
+  jwtVerifyOptions?: jwt.VerifyOptions;
 }
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type DecodedToken = { [key: string]: any };
+
 export interface UserDataRequest extends Request {
   user: DecodedToken;
 }
@@ -27,6 +30,7 @@ const gateGuard = (
     verifyTokenErrorStatus = 403,
     verifyTokenErrorMessage = 'Invalid jwt.',
     cookieName = 'token',
+    jwtVerifyOptions = {},
   }: Configs,
 ) => (
   req: UserDataRequest,
@@ -46,15 +50,20 @@ const gateGuard = (
         .status(missingTokenErrorStatus)
         .send(missingTokenErrorMessage);
     }
-    jwt.verify(token, jwtSecret, (err: jwt.JsonWebTokenError, data: DecodedToken) => {
-      if (err) {
-        return res
-          .status(verifyTokenErrorStatus)
-          .send(verifyTokenErrorMessage);
-      }
-      req.user = data;
-      next();
-    });
+    jwt.verify(
+      token,
+      jwtSecret,
+      jwtVerifyOptions,
+      (err: jwt.JsonWebTokenError, data: DecodedToken) => {
+        if (err) {
+          return res
+            .status(verifyTokenErrorStatus)
+            .send(verifyTokenErrorMessage);
+        }
+        req.user = data;
+        next();
+      },
+    );
   }
 };
 export default gateGuard;

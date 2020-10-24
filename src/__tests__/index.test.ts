@@ -110,7 +110,7 @@ describe('gateGuard', () => {
       middleware(req, res, next);
       expect(
         jwt.verify,
-      ).toHaveBeenCalledWith(req.cookies.token, 'shh', expect.any(Function));
+      ).toHaveBeenCalledWith(req.cookies.token, 'shh', {}, expect.any(Function));
     });
     test('jwt.verify should NOT be called when cookies.token is NOT present', () => {
       delete req.cookies.token;
@@ -119,6 +119,24 @@ describe('gateGuard', () => {
       expect(
         jwt.verify,
       ).not.toHaveBeenCalled();
+    });
+    test('jwt.verify should pass through all jsonwebtoken configs via jwtVerifyOptions', () => {
+      const middleware = gateGuard({
+        jwtSecret,
+        jwtVerifyOptions: {
+          algorithms: ['HS256', 'HS384'],
+          ignoreExpiration: true,
+        },
+      });
+      middleware(req, res, next);
+      expect(
+        jwt.verify,
+      ).toHaveBeenCalledWith(
+        req.cookies.token,
+        'shh',
+        { algorithms: ['HS256', 'HS384'], ignoreExpiration: true },
+        expect.any(Function),
+      );
     });
     test('custom error status and message when cookies.token is NOT present', () => {
       delete req.cookies.token;

@@ -27,7 +27,7 @@ app.use(gateGuard({ jwtSecret: 'shh' }))
 ## Configurations
 | Option  | Default Value  | Required  |  Description |
 |---|---|---|---|
-|  `jwtSecret` |  `undefined` | Yes  |  The secret that was used to sign/encode the JWT |
+|  `jwtSecret` |  `undefined` | Yes  |  The secret/cert that was used to sign/encode the JWT |
 |  `whitelist` |  `[]` | Optional  |  Allow certain endpoints or endpoint groups to bypass jwt checking. Example registration, login, forgot password. Simply calls `next()` if `req.path` is whitelisted. Supports globbing patterns via picomatch. |
 | `missingTokenErrorStatus`  | `401`  | Optional  | HTTP status returned when the key for the jwt is missing from `cookies`.  |
 |  `missingTokenErrorMessage` | 'Missing token.'  | Optional  | Message to show when there is no cookie containing the JWT present at all.  |
