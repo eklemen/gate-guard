@@ -1,3 +1,5 @@
+![gate-guard logo](assets/gate-guard.png)
+
 # gate-guard
 
 Lightweight and configurable ExpressJS middleware to decode and verify [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) JWTs that are sent via cookies.
