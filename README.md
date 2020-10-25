@@ -5,6 +5,7 @@ Lightweight and configurable ExpressJS middleware to decode and verify [jsonwebt
 Let the gate-guard protect your resources by deciding what calls make it through or not.
 
 ## Installation
+_Requires Node 8 or later_
 ```shell script
 npm i --save gate-guard
 # or 
