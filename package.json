@@ -1,6 +1,7 @@
 {
   "name": "gate-guard",
   "description": "A configurable lightweight ExpressJs middleware for jsonwebtoken to validate tokens sent as cookies instead of headers.",
+  "version": "2.0.3",
   "author": "Evan Klemen <ejklemen+gateguard@gmail.com>",
   "keywords": [
     "express",
@@ -10,7 +11,6 @@
     "authentication"
   ],
   "repository": "eklemen/gate-guard",
-  "version": "2.0.2",
   "scripts": {
     "test": "jest --detectOpenHandles",
     "test:watch": "jest --detectOpenHandles --watch",
@@ -37,11 +37,14 @@
     "eslint-config-airbnb": "^18.1.0",
     "eslint-config-typescript": "^3.0.0",
     "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-typescript": "^0.14.0",
     "express": "^4.17.1",
     "jest": "^26.0.1",
     "ts-jest": "^26.0.0",
     "ts-node": "^8.10.1",
+    "tslib": "^2.0.3",
     "typescript": "^3.9.3",
     "typescript-eslint-parser": "^22.0.0"
   },

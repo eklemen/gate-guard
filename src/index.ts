@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Request, Response, NextFunction } from 'express';
-import * as jwt from 'jsonwebtoken';
+import { verify, VerifyOptions, JsonWebTokenError } from 'jsonwebtoken';
 import pm from 'picomatch';
 
 export interface Configs {
@@ -11,7 +11,7 @@ export interface Configs {
   verifyTokenErrorStatus?: number;
   verifyTokenErrorMessage?: string;
   cookieName?: string;
-  jwtVerifyOptions?: jwt.VerifyOptions;
+  jwtVerifyOptions?: VerifyOptions;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -50,11 +50,11 @@ const gateGuard = (
         .status(missingTokenErrorStatus)
         .send(missingTokenErrorMessage);
     }
-    jwt.verify(
+    verify(
       token,
       jwtSecret,
       jwtVerifyOptions,
-      (err: jwt.JsonWebTokenError, data: DecodedToken) => {
+      (err: JsonWebTokenError, data: DecodedToken) => {
         if (err) {
           return res
             .status(verifyTokenErrorStatus)
